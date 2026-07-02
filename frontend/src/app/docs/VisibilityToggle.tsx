@@ -3,20 +3,25 @@
 import { useState, useEffect } from "react";
 
 export default function VisibilityToggle({ 
-  endpointId, 
-  initialIsPublic, 
-  userRole, 
-  loginToken 
-}: { 
-  endpointId: string, 
-  initialIsPublic: boolean, 
-  userRole: string | null, 
-  loginToken: string | null 
+  endpointId,
+  initialIsPublic,
+  currentVisibility,
+  userRole,
+  loginToken,
+  token: tokenProp
+}: {
+  endpointId: string,
+  initialIsPublic?: boolean,
+  currentVisibility?: string,
+  userRole?: string | null,
+  loginToken?: string | null,
+  token?: string | null
 }) {
-  const [isPublic, setIsPublic] = useState(initialIsPublic);
+  const visibility = currentVisibility ?? (initialIsPublic ? 'PUBLIC' : 'PRIVATE');
+  const [isPublic, setIsPublic] = useState(visibility !== 'PRIVATE');
   const [isLoading, setIsLoading] = useState(false);
-  const [role, setRole] = useState<string | null>(userRole);
-  const [token, setToken] = useState<string | null>(loginToken);
+  const [role, setRole] = useState<string | null>(userRole ?? null);
+  const [token, setToken] = useState<string | null>(loginToken ?? tokenProp ?? null);
 
   useEffect(() => {
     if (!role) {

@@ -12,7 +12,7 @@ import GithubSyncPanel from "./GithubSyncPanel";
 
 interface DocsClientProps {
   projectId: string | null;
-  version: string | null;
+  version: string | null | undefined;
   endpointData: any;
   projectInfo: any;
   token: string | null;
@@ -149,7 +149,7 @@ export default function DocsPageClient({
                       </div>
 
                       <div className="p-4 space-y-4">
-                        <EndpointTester endpoint={endpoint} projectId={projectId} />
+                        <EndpointTester ep={endpoint} projectId={projectId} />
 
                         {endpoint.requestSchema && (
                           <div>

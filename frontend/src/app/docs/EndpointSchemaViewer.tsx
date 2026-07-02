@@ -16,13 +16,16 @@ interface SchemaDisplay {
 }
 
 export default function EndpointSchemaViewer({ 
-  endpoint 
+  endpoint,
+  schema
 }: { 
-  endpoint: any 
+  endpoint?: any,
+  schema?: any
 }) {
   const [activeTab, setActiveTab] = useState<'params' | 'headers' | 'response'>('params');
+  const effectiveSchema = schema ?? endpoint;
 
-  // Parse parameters from endpoint
+  // Parse parameters from endpoint/schema
   const parseParameters = (params: any) => {
     if (!params) return [];
     if (typeof params === 'string') {
@@ -55,9 +58,9 @@ export default function EndpointSchemaViewer({
     return Array.isArray(params) ? params : [];
   };
 
-  const parameters = parseParameters(endpoint.parameters);
-  const headers = parseParameters(endpoint.requestHeaders);
-  const responseSchema = endpoint.responseSchema ? JSON.parse(JSON.stringify(endpoint.responseSchema)) : null;
+  const parameters = parseParameters(effectiveSchema?.parameters || effectiveSchema?.requestSchema || effectiveSchema?.requestBody);
+  const headers = parseParameters(effectiveSchema?.requestHeaders);
+  const responseSchema = effectiveSchema?.responseSchema ? JSON.parse(JSON.stringify(effectiveSchema.responseSchema)) : null;
 
   const ParameterTable = ({ data }: { data: any[] }) => (
     <div className="overflow-x-auto">

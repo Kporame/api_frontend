@@ -16,7 +16,7 @@ interface Project {
   documentUrl?: string;
   githubUrl?: string;
   visibility?: string;
-  documents?: Array<{ endpoints?: any[] }>;
+  documents?: Array<{ endpoints?: any[]; fileType?: string }>;
 }
 
 interface Team {
@@ -89,13 +89,13 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
                      <div className="flex items-center justify-between mb-2">
                        <h3 className="text-lg font-semibold group-hover:text-primary transition-colors truncate">{project.name}</h3>
                         <div className="flex items-center gap-2">
-                          <ProjectVisibilityToggle 
-                            projectId={project.id} 
-                            initialVisibility={project.visibility || 'PUBLIC'} 
-                            userRole={user?.role || null} 
-                            loginToken={token ?? null} 
+                          <ProjectVisibilityToggle
+                            projectId={project.id}
+                            initialVisibility={project.visibility || 'PUBLIC'}
+                            userRole={user?.role || null}
+                            loginToken={token ?? null}
                           />
-                          <DeleteProjectButton 
+                          <DeleteProjectButton
                             projectId={project.id}
                             projectName={project.name}
                           />
@@ -131,8 +131,8 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
                          <span className="text-xs font-bold text-foreground bg-muted px-2 py-0.5 rounded-full">{project.documents?.[0]?.endpoints?.length || 0}</span>
                          {project.documents?.[0]?.fileType && (
                            <span className={`text-xs px-2 py-0.5 rounded font-medium ${
-                             project.documents[0].fileType === 'swagger' 
-                               ? 'bg-blue-500/10 text-blue-500' 
+                             project.documents[0].fileType === 'swagger'
+                               ? 'bg-blue-500/10 text-blue-500'
                                : 'bg-orange-500/10 text-orange-500'
                            }`}>
                              {project.documents[0].fileType === 'swagger' ? '🔷 Swagger' : '🔶 Postman'}

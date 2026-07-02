@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useDocs } from "./DocsContext";
 
-export default function EndpointTester({ ep }: { ep: any }) {
+export default function EndpointTester({ ep, projectId }: { ep: any, projectId?: string | null }) {
   const { globalToken, baseUrl } = useDocs();
   const [requestBody, setRequestBody] = useState(ep.requestBody || "");
   const [requestUrl, setRequestUrl] = useState(ep.path || "");

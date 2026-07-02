@@ -127,7 +127,7 @@ export default async function DocsPage({ searchParams }: { searchParams: Promise
               </div>
             )}
 
-            {endpointData.endpoints && endpointData.endpoints.map((ep, idx) => (
+            {endpointData.endpoints && endpointData.endpoints.map((ep: any, idx: number) => (
               <section key={ep.id} id={ep.id} className="scroll-mt-24">
                 <div className="space-y-6">
                   {/* Header with Title and Visibility */}
