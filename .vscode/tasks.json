@@ -1,0 +1,117 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Setup Backend - Install & Prisma",
+      "type": "shell",
+      "command": "cd backend && npm install && npx prisma generate && npx prisma migrate dev --name init",
+      "inAgents": true,
+      "runOptions": { "runOn": "worktreeCreated" },
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      }
+    },
+    {
+      "label": "Setup Frontend - Install",
+      "type": "shell",
+      "command": "cd frontend && npm install",
+      "inAgents": true,
+      "runOptions": { "runOn": "worktreeCreated" },
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      }
+    },
+    {
+      "label": "Backend - Build",
+      "type": "shell",
+      "command": "cd backend && npm run build",
+      "inAgents": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      }
+    },
+    {
+      "label": "Backend - Start Dev",
+      "type": "shell",
+      "command": "cd backend && npm run start:dev",
+      "inAgents": true,
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      }
+    },
+    {
+      "label": "Frontend - Start Dev",
+      "type": "shell",
+      "command": "cd frontend && npm run dev",
+      "inAgents": true,
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      }
+    },
+    {
+      "label": "Frontend - Build",
+      "type": "shell",
+      "command": "cd frontend && npm run build",
+      "inAgents": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      }
+    },
+    {
+      "label": "Lint Backend",
+      "type": "shell",
+      "command": "cd backend && npm run lint",
+      "inAgents": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      }
+    },
+    {
+      "label": "Lint Frontend",
+      "type": "shell",
+      "command": "cd frontend && npm run lint",
+      "inAgents": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      }
+    },
+    {
+      "label": "Test Backend",
+      "type": "shell",
+      "command": "cd backend && npm run test",
+      "inAgents": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      }
+    }
+  ]
+}

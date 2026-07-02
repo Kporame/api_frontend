@@ -1,0 +1,39 @@
+// ===================================================================
+// UPDATE REQUIRED: Add this to backend/src/app.module.ts
+// ===================================================================
+
+// BEFORE (Current):
+/*
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { PrismaModule } from './prisma/prisma.module';
+
+@Module({
+  imports: [PrismaModule],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+*/
+
+// AFTER (Updated):
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { PrismaModule } from './prisma/prisma.module';
+import { MockServerModule } from './mock-server/mock-server.module';  // ADD THIS LINE
+
+@Module({
+  imports: [PrismaModule, MockServerModule],  // ADD MockServerModule HERE
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+
+// ===================================================================
+// That's it! After this update:
+// 1. Run: npm run build
+// 2. Run: npm run start:dev
+// 3. Test: GET /mock/{endpointId}
+// ===================================================================
