@@ -129,6 +129,23 @@ PORT=4010                           # Server port
 DATABASE_URL=file:./dev.db         # SQLite database path
 ```
 
+### Database Management
+
+#### Open Prisma Studio
+Prisma Studio is a visual database editor. Open it with:
+
+```bash
+# Local development
+npx prisma studio
+
+# Docker container
+docker exec -d api-portal-backend npx prisma studio --hostname 0.0.0.0 --port 5555
+```
+
+Then access Prisma Studio at:
+- Local: http://localhost:5555
+- Remote: http://143.198.88.74:5555
+
 ### Remote Deployment
 For deploying to a remote server (e.g., 143.198.88.74:5555):
 
