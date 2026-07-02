@@ -234,6 +234,7 @@ function AdminPageContent() {
                       ))
                     )}
                   </tbody>
+                </table>
               </div>
             </>
           )}

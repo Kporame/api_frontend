@@ -244,10 +244,10 @@ function UserDetailContent() {
                       {allProjects.map((project) => (
                         <label
                           key={project.id}
-                          className="flex items-start gap-3 p-3 md:p-4 border border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors text-sm\"
+                          className="flex items-start gap-3 p-3 md:p-4 border border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors text-sm"
                         >
                           <input
-                            type=\"checkbox\"
+                            type="checkbox"
                             checked={selectedProjects.includes(project.id)}
                             onChange={() => handleProjectToggle(project.id)}
                             className="mt-1 w-4 h-4 rounded border-border cursor-pointer"
