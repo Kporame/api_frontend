@@ -1,31 +1,60 @@
+# Build stage
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY frontend/package*.json ./frontend/
-RUN cd frontend && npm install
+# Copy package files
+COPY package*.json ./
+COPY tsconfig.json ./
+COPY next.config.ts ./
+COPY postcss.config.mjs ./
 
-COPY frontend ./frontend
+# Install dependencies
+RUN npm ci
 
-RUN cd frontend && npm run build
+# Copy source code
+COPY public ./public
+COPY src ./src
 
-FROM node:20-alpine AS runner
+# Build Next.js application
+ARG NEXT_PUBLIC_API_BASE_URL=http://api:4010
+ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
+RUN npm run build
+
+# Production stage
+FROM node:20-alpine
 
 WORKDIR /app
 
-ENV NODE_ENV=production
-ENV PORT=3000
-ENV HOSTNAME=0.0.0.0
+# Install dumb-init for proper signal handling
+RUN apk add --no-cache dumb-init
 
-COPY frontend/package*.json ./frontend/
-RUN cd frontend && npm install --omit=dev
+# Copy package files
+COPY package*.json ./
 
-COPY --from=builder /app/frontend/.next /app/frontend/.next
-COPY --from=builder /app/frontend/public /app/frontend/public
-COPY --from=builder /app/frontend/next.config.ts /app/frontend/next.config.ts
+# Install only production dependencies
+RUN npm ci --only=production
 
-WORKDIR /app/frontend
+# Copy public files from builder
+COPY --from=builder /app/public ./public
 
+# Copy built application from builder
+COPY --from=builder /app/.next ./.next
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+USER nextjs
+
+# Expose port
 EXPOSE 3000
 
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:3000', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+
+# Use dumb-init to handle signals properly
+ENTRYPOINT ["dumb-init", "--"]
+
+# Start application
 CMD ["npm", "run", "start"]
