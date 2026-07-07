@@ -3,6 +3,9 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Install build dependencies needed for compiling native modules (if any)
+RUN apk add --no-cache python3 make g++ build-base sqlite-dev linux-headers git
+
 # Copy package files
 COPY package*.json ./
 COPY tsconfig.json ./
@@ -10,7 +13,7 @@ COPY next.config.ts ./
 COPY postcss.config.mjs ./
 
 # Install dependencies
-RUN npm ci
+RUN npm install --no-audit --no-fund
 
 # Copy source code
 COPY public ./public
@@ -33,7 +36,7 @@ RUN apk add --no-cache dumb-init
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm ci --only=production
+RUN npm install --omit=dev --no-audit --no-fund
 
 # Copy public files from builder
 COPY --from=builder /app/public ./public

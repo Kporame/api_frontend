@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import { useDocs } from "./DocsContext";
 import { getApiUrl } from "@/lib/api";
 
-export default function EndpointTester({ ep }: { ep: any }) {
+interface EndpointTesterProps {
+  ep: any;
+  projectId?: string | null;
+}
+
+export default function EndpointTester({ ep, projectId }: EndpointTesterProps) {
   const { globalToken, baseUrl } = useDocs();
   const [requestBody, setRequestBody] = useState(ep.requestBody || "");
   const [requestUrl, setRequestUrl] = useState(ep.path || "");

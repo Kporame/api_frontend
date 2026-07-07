@@ -138,8 +138,9 @@ export default function DocsPageClient({
                           {endpoint.isPublic !== false && (
                             <VisibilityToggle
                               endpointId={endpoint.id}
-                              currentVisibility={endpoint.visibility || 'PUBLIC'}
-                              token={token}
+                              initialIsPublic={endpoint.isPublic !== false}
+                              userRole={user?.role || null}
+                              loginToken={token}
                             />
                           )}
                         </div>
@@ -149,7 +150,7 @@ export default function DocsPageClient({
                       </div>
 
                       <div className="p-4 space-y-4">
-                        <EndpointTester endpoint={endpoint} projectId={projectId} />
+                        <EndpointTester ep={endpoint} />
 
                         {endpoint.requestSchema && (
                           <div>
