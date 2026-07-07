@@ -17,7 +17,7 @@ interface Project {
   documentUrl?: string;
   githubUrl?: string;
   visibility?: string;
-  documents?: Array<{ endpoints?: any[] }>;
+  documents?: Array<{ endpoints?: any[]; fileType?: string }>;
 }
 
 interface Team {
