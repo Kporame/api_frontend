@@ -7,8 +7,8 @@ import Sidebar from "../Sidebar";
 interface DocsHeaderClientProps {
   projectInfo: any;
   endpointData: any;
-  version: string | null;
-  projectId: string | null;
+  version?: string | null;
+  projectId?: string | null;
 }
 
 export default function DocsHeaderClient({
